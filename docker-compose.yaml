@@ -1,0 +1,67 @@
+version: '3.9'
+services:
+  # api_server:
+  #   container_name: api_server
+  #   build:
+  #     context: ./api-server
+  #   volumes:
+  #     - ./api-server:/app
+  #   ports:
+  #     - 8080:8080
+  #     - 8083:8083 # テスト用のポート
+  #   depends_on:
+  #     - db
+  #   tty: true # コンテナの永続化
+  #   environment:
+  #     - TZ=Asia/Tokyo
+  #   entrypoint: air -c .air.toml
+
+  # migrations:
+  #   container_name: migrations
+  #   build:
+  #     context: ./migrations
+  #   volumes:
+  #     - ./migrations:/app
+  #   depends_on:
+  #     - db
+  #   tty: true # コンテナの永続化
+  #   environment:
+  #     - TZ=Asia/Tokyo
+
+  db:
+    image: mysql:8.0.28
+    container_name: db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: typespec_practice
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql:/var/lib/mysql
+
+  gcs:
+    image: fsouza/fake-gcs-server
+    tty: true
+    ports:
+      - 4443:4443
+    volumes:
+      - ./.data:/data/typespec_practice_dev
+      - ./.storage:/storage
+    command: -scheme http -public-host ${URL:-localhost}:4443 -external-url http://${URL:-gcs}:4443 -port-http 8000
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - 3000:3000
+      - 3100:3100 # E2Eテスト用のポート
+    volumes:
+      - ./frontend:/app
+      # - ./api-server/api/:/app/openapi
+    restart: always
+    tty: true
+    stdin_open: true
+    command: 'bash entrypoint.sh'
