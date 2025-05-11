@@ -4,14 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:test": "NODE_ENV=test next dev --turbopack --port 3100",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check-types": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,md}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
