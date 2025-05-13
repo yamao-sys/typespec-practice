@@ -2,6 +2,10 @@
 
 TypeSpec を使ってみる
 
+- namespace, interface, model を用いて書く
+- OpenAPI 3.0, 3.1 は基本的に components.schemas に Model を書く(requestBodies, response は書かず)
+- ルートの main.tsp は namespace + models + routes に分割するのがやりやすそう
+
 ## 参考
 
 - Docs
