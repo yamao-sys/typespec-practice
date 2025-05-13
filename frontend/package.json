@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "gen:schema": "cd api-spec && npx tsp compile . && cd .."
   },
   "dependencies": {
     "dotenv": "^16.5.0",

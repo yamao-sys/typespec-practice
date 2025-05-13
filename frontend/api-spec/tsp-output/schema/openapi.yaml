@@ -1,0 +1,219 @@
+openapi: 3.1.0
+info:
+  title: (title)
+  version: '1.0'
+  description: A sample service
+tags:
+  - name: auth
+paths:
+  /auth/signIn:
+    post:
+      operationId: post-auth-sign_in
+      summary: SignIn
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            Set-Cookie:
+              required: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - errors
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInInput'
+  /auth/signUp:
+    post:
+      operationId: post-auth-sign_up
+      summary: SignUp
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpValidationErrorResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpValidationErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SignUpInput'
+  /auth/validateSignUp:
+    post:
+      operationId: post-auth-validate_sign_up
+      summary: Validate SignUp
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpValidationErrorResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpValidationErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SignUpInput'
+components:
+  schemas:
+    SignInInput:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      title: Sign In Input
+    SignUpInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        birthday:
+          type: string
+          format: date
+        frontIdentification: {}
+        backIdentification: {}
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+    SignUpValidationError:
+      type: object
+      properties:
+        firstName:
+          type: array
+          items:
+            type: string
+        lastName:
+          type: array
+          items:
+            type: string
+        email:
+          type: array
+          items:
+            type: string
+        password:
+          type: array
+          items:
+            type: string
+        birthday:
+          type: array
+          items:
+            type: string
+        frontIdentification:
+          type: array
+          items:
+            type: string
+        backIdentification:
+          type: array
+          items:
+            type: string
+      title: SignUpValidationError
+    SignUpValidationErrorResponse:
+      type: object
+      required:
+        - code
+        - errors
+      properties:
+        code:
+          type: integer
+        errors:
+          $ref: '#/components/schemas/SignUpValidationError'
+servers:
+  - url: https://localhost:8080
+    variables: {}
