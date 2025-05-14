@@ -467,7 +467,7 @@ components:
           type: array
           items:
             type: string
-      title: SignUpValidationError
+      title: Sign Up Validation Error
     SignUpValidationErrorResponse:
       type: object
       required:
