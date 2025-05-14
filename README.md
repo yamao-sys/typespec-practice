@@ -6,6 +6,25 @@ TypeSpec を使ってみる
 - OpenAPI 3.0, 3.1 は基本的に components.schemas に Model を書く(requestBodies, response は書かず)
 - ルートの main.tsp は namespace + models + routes に分割するのがやりやすそう
 
+以下のようなディレクトリ構成が扱いやすそう
+
+- api-spec(typespec を扱うルートディレクトリ)
+  - models(各ドメインの components を記載)
+    - pet.tsp
+    - common.tsp
+    - main.tsp(各 model の import)
+  - routes(models を用いて、ディレクトリごとにエンドポイントの requestBodies, response, path の定義を行う)
+    - pet
+      - request-body.tsp
+      - response.tsp
+      - main.tsp(request-body と response を用いて/pets の定義)
+    - common
+      - request.tsp(共通 header や securitySchemes)
+      - response.tsp(共通のレスポンス)
+      - main.tsp(request.tsp と response の import)
+  - namespace.tsp(routes で用いる共通の namespace)
+  - main.tsp(namespace, routes, models の import)
+
 ## 参考
 
 - Docs
