@@ -28,7 +28,7 @@ namespace SampleService.Auth {
 	interface SignUp {
 		@route("/signUp")
 		@operationId("post-auth-sign_up")
-		@summary("SignUp")
+		@summary("Sign Up")
 		@post
 		post(
 			@multipartBody body: SignUpInput,
@@ -40,7 +40,7 @@ namespace SampleService.Auth {
 	interface SignIn {
 		@route("/signIn")
 		@operationId("post-auth-sign_in")
-		@summary("SignIn")
+		@summary("Sign In")
 		@post
 		post(
 			@body body: SignInInput,
