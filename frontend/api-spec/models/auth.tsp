@@ -1,6 +1,6 @@
 import "@typespec/http";
 
-@summary("SignUpValidationError")
+@summary("Sign Up Validation Error")
 model SignUpValidationError {
   firstName?: string[];
   lastName?: string[];
