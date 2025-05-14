@@ -10,7 +10,7 @@ paths:
   /auth/signIn:
     post:
       operationId: post-auth-sign_in
-      summary: SignIn
+      summary: Sign In
       parameters: []
       responses:
         '200':
@@ -62,7 +62,7 @@ paths:
   /auth/signUp:
     post:
       operationId: post-auth-sign_up
-      summary: SignUp
+      summary: Sign Up
       parameters: []
       responses:
         '200':
