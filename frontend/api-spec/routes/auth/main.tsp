@@ -2,16 +2,13 @@ import "@typespec/http";
 import "@typespec/openapi";
 import "@typespec/openapi3";
 
-import "../models/auth.tsp";
-import "../models/common.tsp";
+import "./request-body.tsp";
+import "./response.tsp";
+
+import "../common";
 
 using Http;
 using OpenAPI;
-
-model SignUpValidationErrorResponse {
-	code: integer;
-	errors: SignUpValidationError;
-}
 
 @tag("auth")
 @route("/auth")
@@ -23,7 +20,9 @@ namespace SampleService.Auth {
 		@post
 		post(
 			@multipartBody body: SignUpInput,
-		): Models.Common.SuccessResponse<SignUpValidationErrorResponse> | Models.Common.BadRequestResponse<SignUpValidationErrorResponse> | Models.Common.InternalServerErrorResponse;
+		): SuccessResponse<SignUpValidationErrorResponse>
+		| BadRequestErrorResponse<SignUpValidationErrorResponse>
+		| InternalServerErrorResponse;
   }
 
 	interface SignUp {
@@ -33,7 +32,9 @@ namespace SampleService.Auth {
 		@post
 		post(
 			@multipartBody body: SignUpInput,
-		): Models.Common.SuccessResponse<SignUpValidationErrorResponse> | Models.Common.BadRequestResponse<SignUpValidationErrorResponse> | Models.Common.InternalServerErrorResponse;
+		): SuccessResponse<SignUpValidationErrorResponse>
+		| BadRequestErrorResponse<SignUpValidationErrorResponse>
+		| InternalServerErrorResponse;
   }
 
 	interface SignIn {
