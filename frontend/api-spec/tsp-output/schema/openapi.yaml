@@ -5,6 +5,7 @@ info:
   description: A sample service
 tags:
   - name: auth
+  - name: todos
 paths:
   /auth/signIn:
     post:
@@ -138,8 +139,271 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/SignUpInput'
+  /todos/:
+    get:
+      operationId: get-todos
+      summary: Fetch Todos
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTodosResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTodosResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - todos
+      security:
+        - ApiKeyAuth: []
+    post:
+      operationId: post-todos
+      summary: Create Todo Schema
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreTodoResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreTodoResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - todos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreTodoInput'
+      security:
+        - ApiKeyAuth: []
+  /todos/{id}:
+    get:
+      operationId: get-todo
+      summary: Show Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowTodoResponse'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - todos
+      security:
+        - ApiKeyAuth: []
+    put:
+      operationId: put-todo
+      summary: Update Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreTodoResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreTodoResponse'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - todos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreTodoInput'
+      security:
+        - ApiKeyAuth: []
+    delete:
+      operationId: delete-todo
+      summary: Delete Todo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTodoResponse'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+      tags:
+        - todos
+      security:
+        - ApiKeyAuth: []
 components:
   schemas:
+    DeleteTodoResponse:
+      type: object
+      required:
+        - code
+        - result
+      properties:
+        code:
+          type: integer
+        result:
+          type: boolean
+      title: Delete Todo Response
+    FetchTodosResponse:
+      type: object
+      required:
+        - todos
+      properties:
+        todos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Todo'
+      title: Fetch Todos Response
+    ShowTodoResponse:
+      type: object
+      required:
+        - todo
+      properties:
+        todo:
+          $ref: '#/components/schemas/Todo'
+      title: Show Todo Response
     SignInInput:
       type: object
       required:
@@ -214,6 +478,59 @@ components:
           type: integer
         errors:
           $ref: '#/components/schemas/SignUpValidationError'
+    StoreTodoInput:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+      title: Todo Input
+    StoreTodoResponse:
+      type: object
+      required:
+        - code
+        - errors
+      properties:
+        code:
+          type: integer
+        errors:
+          $ref: '#/components/schemas/StoreTodoValidationError'
+      title: Store Todo Response
+    StoreTodoValidationError:
+      type: object
+      properties:
+        title:
+          type: array
+          items:
+            type: string
+        content:
+          type: array
+          items:
+            type: string
+      title: Store Todo Validation Error
+    Todo:
+      type: object
+      required:
+        - id
+        - title
+        - content
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+      title: Todo Object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: cookie
+      name: token
 servers:
   - url: https://localhost:8080
     variables: {}
