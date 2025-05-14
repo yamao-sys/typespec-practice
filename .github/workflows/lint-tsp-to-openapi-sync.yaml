@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Typespec dependencies
         working-directory: ./frontend/api-spec
-        run: pnpm i
+        run: npm i
 
       - name: Run tspcheck
         working-directory: ./frontend
