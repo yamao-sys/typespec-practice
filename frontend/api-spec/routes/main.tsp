@@ -1,2 +1,3 @@
-import "./auth.tsp";
+import "./common";
+import "./auth";
 import "./todo";
