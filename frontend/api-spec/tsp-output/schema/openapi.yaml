@@ -7,9 +7,9 @@ tags:
   - name: auth
   - name: todos
 paths:
-  /auth/signIn:
+  /auth/sign-in:
     post:
-      operationId: post-auth-sign_in
+      operationId: post-auth-sign-in
       summary: Sign In
       parameters: []
       responses:
@@ -59,9 +59,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SignInInput'
-  /auth/signUp:
+  /auth/sign-up:
     post:
-      operationId: post-auth-sign_up
+      operationId: post-auth-sign-up
       summary: Sign Up
       parameters: []
       responses:
@@ -99,10 +99,10 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/SignUpInput'
-  /auth/validateSignUp:
+  /auth/validate-sign-up:
     post:
-      operationId: post-auth-validate_sign_up
-      summary: Validate SignUp
+      operationId: post-auth-validate-sign-up
+      summary: Validate Sign Up
       parameters: []
       responses:
         '200':
