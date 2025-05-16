@@ -429,8 +429,12 @@ components:
         birthday:
           type: string
           format: date
-        frontIdentification: {}
-        backIdentification: {}
+        frontIdentification:
+          type: string
+          format: binary
+        backIdentification:
+          type: string
+          format: binary
       required:
         - firstName
         - lastName
