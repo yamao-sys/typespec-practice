@@ -3,22 +3,22 @@ import "../../models/todo.tsp";
 
 @summary("Fetch Todos Response")
 model FetchTodosResponse {
-	todos: Todo[];
+  todos: Todo[];
 }
 
 @summary("Show Todo Response")
 model ShowTodoResponse {
-	todo: Todo;
+  todo: Todo;
 }
 
 @summary("Store Todo Response")
 model StoreTodoResponse {
-	code: integer;
-	errors: StoreTodoValidationError;
+  code: integer;
+  errors: StoreTodoValidationError;
 }
 
 @summary("Delete Todo Response")
 model DeleteTodoResponse {
-	code: integer;
-	result: boolean;
+  code: integer;
+  result: boolean;
 }
