@@ -3,7 +3,6 @@
 TypeSpec を使ってみる
 
 - namespace, interface, model を用いて書く
-- OpenAPI 3.0, 3.1 は基本的に components.schemas に Model を書く(requestBodies, response は書かず)
 - ルートの main.tsp は namespace + models + routes に分割するのがやりやすそう
 
 以下のようなディレクトリ構成が扱いやすそう
@@ -24,6 +23,24 @@ TypeSpec を使ってみる
       - main.tsp(request.tsp と response の import)
   - namespace.tsp(routes で用いる共通の namespace)
   - main.tsp(namespace, routes, models の import)
+
+### 【良かった点】
+
+- components, path の定義をリソースごとに分割できるので定義の可読性と保守性が良さそう
+- 元ファイル(tsp ファイル)の変更時に YAML を自動更新できるので(watch オプションがあるので)、開発体験も良い
+  - ただ、YAML 出力後にパッチスクリプトを適用するときは何らか自動化するには工夫が要る
+- CI で tsp ファイルと YAML のズレがないかチェックもできる
+- 既存の YAML から tsp ファイルへ変換もできる
+  - (ただしファイル分割は自分たちで行う必要はある)
+
+### 【少し weak point と感じた点】
+
+- 既存の YAML → tsp ファイルへの変換時にもし定義に誤りがあっても通ってしまう点
+  - unknown 型に変換される
+- YAML から型や API クライアントのコードを自動生成で欲しいものが得られない場合は少し工夫が要る
+  - 例えば、ファイル入力で type string(format binary)で欲しいけど、Typespec では requestBody の content-type で出力され、components では{}で出力される等
+- キャッチアップコストは一定ありそう
+  - 定義の書き方
 
 ## 参考
 
