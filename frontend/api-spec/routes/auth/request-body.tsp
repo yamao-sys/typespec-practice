@@ -17,6 +17,6 @@ model SignUpInput {
 
 @summary("Sign In Input")
 model SignInInput {
-	email: string;
-	password: string;
+  email: string;
+  password: string;
 }

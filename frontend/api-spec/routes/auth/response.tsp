@@ -1,6 +1,6 @@
 import "../../models/auth.tsp";
 
 model SignUpValidationErrorResponse {
-	code: integer;
-	errors: SignUpValidationError;
+  code: integer;
+  errors: SignUpValidationError;
 }
