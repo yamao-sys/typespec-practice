@@ -14,9 +14,9 @@ using OpenAPI;
 @route("/auth")
 namespace SampleService.Auth {
   interface ValidateSignUp {
-    @route("/validateSignUp")
-    @operationId("post-auth-validate_sign_up")
-    @summary("Validate SignUp")
+    @route("/validate-sign-up")
+    @operationId("post-auth-validate-sign-up")
+    @summary("Validate Sign Up")
     @post
     post(
       @multipartBody body: SignUpInput,
@@ -26,8 +26,8 @@ namespace SampleService.Auth {
   }
 
   interface SignUp {
-    @route("/signUp")
-    @operationId("post-auth-sign_up")
+    @route("/sign-up")
+    @operationId("post-auth-sign-up")
     @summary("Sign Up")
     @post
     post(
@@ -38,8 +38,8 @@ namespace SampleService.Auth {
   }
 
   interface SignIn {
-    @route("/signIn")
-    @operationId("post-auth-sign_in")
+    @route("/sign-in")
+    @operationId("post-auth-sign-in")
     @summary("Sign In")
     @post
     post(
