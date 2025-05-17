@@ -14,7 +14,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "test:e2e": "playwright test",
     "gen:schema": "cd api-spec && npx tsp compile . && node patch.mjs && cd ..",
-    "gen:schema:watch": "cd api-spec && npx tsp compile . --watch && cd ..",
+    "gen:schema:watch": "SHELL=/usr/bin/sh chokidar 'api-spec/**/*.tsp' -c 'pnpm gen:schema'",
     "diff:schema:check": "pnpm gen:schema && git add api-spec/tsp-output/schema/openapi.yaml && git diff --staged --quiet || (echo 'tspとyamlの変更が同期されていません' && exit 1)"
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chokidar-cli": "^3.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "^10.1.5",
