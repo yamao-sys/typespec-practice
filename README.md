@@ -7,6 +7,7 @@ TypeSpec を使ってみる
 
 以下のようなディレクトリ構成が扱いやすそう
 
+```
 - api-spec(typespec を扱うルートディレクトリ)
   - models(各ドメインの components を記載)
     - pet.tsp
@@ -23,12 +24,14 @@ TypeSpec を使ってみる
       - main.tsp(request.tsp と response の import)
   - namespace.tsp(routes で用いる共通の namespace)
   - main.tsp(namespace, routes, models の import)
+```
 
 ### 【良かった点】
 
 - components, path の定義をリソースごとに分割できるので定義の可読性と保守性が良さそう
 - 元ファイル(tsp ファイル)の変更時に YAML を自動更新できるので(watch オプションがあるので)、開発体験も良い
   - ただ、YAML 出力後にパッチスクリプトを適用するときは何らか自動化するには工夫が要る
+  - その場合は watch オプションよりも chokidar で tsp ファイルの変更をトリガーに compile + patch の適用を行う方がやりやすいかも
 - CI で tsp ファイルと YAML のズレがないかチェックもできる
 - 既存の YAML から tsp ファイルへ変換もできる
   - (ただしファイル分割は自分たちで行う必要はある)
