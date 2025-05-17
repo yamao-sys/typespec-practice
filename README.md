@@ -7,6 +7,7 @@ TypeSpec を使ってみる
 
 以下のようなディレクトリ構成が扱いやすそう
 
+```
 - api-spec(typespec を扱うルートディレクトリ)
   - models(各ドメインの components を記載)
     - pet.tsp
@@ -23,6 +24,7 @@ TypeSpec を使ってみる
       - main.tsp(request.tsp と response の import)
   - namespace.tsp(routes で用いる共通の namespace)
   - main.tsp(namespace, routes, models の import)
+```
 
 ### 【良かった点】
 
